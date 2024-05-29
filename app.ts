@@ -14,7 +14,8 @@ const baseURL = 'https://httpbin.org';
 
 // Endpoint to handle form submissions
 app.post('/submit', async (req, res) => {
-  const { token, email } = req.body;
+  const { email } = req.body;
+  const token = req.body['g-recaptcha-response'];
   console.log(req.body);
 
   if (!token) {
