@@ -15,6 +15,7 @@ const baseURL = 'https://httpbin.org';
 // Endpoint to handle form submissions
 app.post('/submit', async (req, res) => {
   const { token, email } = req.body;
+  console.log(req.body);
 
   if (!token) {
     return res.status(400).json({ success: false, message: 'No reCAPTCHA token provided' });
