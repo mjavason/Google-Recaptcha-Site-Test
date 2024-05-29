@@ -6,10 +6,11 @@ import dotenv from 'dotenv';
 const app = express();
 dotenv.config({ path: './.env' });
 
-//keys and configs
+//#region keys and configs
 const PORT = process.env.PORT || 3000;
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || 'xxx';
 const baseURL = 'https://httpbin.org';
+//#endregion
 
 // Endpoint to handle form submissions
 app.post('/submit', async (req, res) => {
