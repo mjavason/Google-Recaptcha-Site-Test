@@ -36,7 +36,7 @@ app.post('/submit', async (req, res) => {
     if (data.success) {
       return res.json({ success: true, message: 'reCAPTCHA verified successfully', email:req.body.email });
     } else {
-      return res.status(400).json({ success: false, message: 'reCAPTCHA verification failed', errors: data['error-codes'], email });
+      return res.status(400).json({ success: false, message: 'reCAPTCHA verification failed', errors: data['error-codes'], email:req.body.email });
     }
   } catch (error) {
     return res.status(500).json({ success: false, message: 'Internal server error' });
