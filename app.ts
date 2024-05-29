@@ -16,37 +16,54 @@ const baseURL = 'https://httpbin.org';
 
 // Endpoint to handle form submissions
 app.post('/submit', async (req, res) => {
-  console.log(req.body);
-  const token = req.body['g-recaptcha-response'];
+  console.log(req);
+  const token = false;
 
   if (!token) {
-    return res.status(400).json({ success: false, message: 'No reCAPTCHA token provided' });
+    return res
+      .status(400)
+      .json({ success: false, message: 'No reCAPTCHA token provided' });
   }
 
   try {
-    const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null, {
-      params: {
-        secret: RECAPTCHA_SECRET_KEY,
-        response: token,
-      },
-    });
+    const response = await axios.post(
+      `https://www.google.com/recaptcha/api/siteverify`,
+      null,
+      {
+        params: {
+          secret: RECAPTCHA_SECRET_KEY,
+          response: token,
+        },
+      }
+    );
 
     const data = response.data;
 
     if (data.success) {
-      return res.json({ success: true, message: 'reCAPTCHA verified successfully', email:req.body.email });
+      return res.json({
+        success: true,
+        message: 'reCAPTCHA verified successfully',
+        email: req.body.email,
+      });
     } else {
-      return res.status(400).json({ success: false, message: 'reCAPTCHA verification failed', errors: data['error-codes'], email:req.body.email });
+      return res.status(400).json({
+        success: false,
+        message: 'reCAPTCHA verification failed',
+        errors: data['error-codes'],
+        email: req.body.email,
+      });
     }
   } catch (error) {
-    return res.status(500).json({ success: false, message: 'Internal server error' });
+    return res
+      .status(500)
+      .json({ success: false, message: 'Internal server error' });
   }
 });
 
 //#region Server setup
 
 // default message
-app.get('/api', async(req: Request, res: Response) => {
+app.get('/api', async (req: Request, res: Response) => {
   const result = await axios.get(baseURL);
   console.log(result.status);
   res.send({ message: 'Demo API called (httpbin.org)', data: result.status });
@@ -62,7 +79,7 @@ app.listen(PORT, async () => {
 });
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.log(`${'\x1b[31m'}${err.message}${'/x1b[0m]'}`);
+  console.log(`${'\x1b[31m'}${err.message}${'\x1b[0m]'}`);
   return res
     .status(500)
     .send({ success: false, statusCode: 500, message: err.message });
