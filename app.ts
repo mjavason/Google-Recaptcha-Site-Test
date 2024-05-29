@@ -1,9 +1,11 @@
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
+import cors from 'cors';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
 const app = express();
+app.use(cors());
 dotenv.config({ path: './.env' });
 
 //#region keys and configs
@@ -14,9 +16,8 @@ const baseURL = 'https://httpbin.org';
 
 // Endpoint to handle form submissions
 app.post('/submit', async (req, res) => {
-  const { email } = req.body;
-  const token = req.body['g-recaptcha-response'];
   console.log(req.body);
+  const token = req.body['g-recaptcha-response'];
 
   if (!token) {
     return res.status(400).json({ success: false, message: 'No reCAPTCHA token provided' });
@@ -33,7 +34,7 @@ app.post('/submit', async (req, res) => {
     const data = response.data;
 
     if (data.success) {
-      return res.json({ success: true, message: 'reCAPTCHA verified successfully', email });
+      return res.json({ success: true, message: 'reCAPTCHA verified successfully', email:req.body.email });
     } else {
       return res.status(400).json({ success: false, message: 'reCAPTCHA verification failed', errors: data['error-codes'], email });
     }
