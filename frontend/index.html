@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+<html>
+  <head>
+    <title>reCAPTCHA demo: Simple page</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body>
+    <form action="verified.html" method="POST">
+      <div class="g-recaptcha" data-sitekey="6LeSpOspAAAAAKu9JG3c9FDiSjbCFTBPQnTPsK2m"></div>
+      <br/>
+      <input type="email" name="email" id="email">
+      <input type="submit" value="Submit">
+    </form>
+  </body>
 </html>
