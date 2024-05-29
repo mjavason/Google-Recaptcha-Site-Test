@@ -12,7 +12,7 @@ dotenv.config({ path: './.env' });
 
 //#region keys and configs
 const PORT = process.env.PORT || 3000;
-const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || 'xxx';
+const RECAPTCHA_PRIVATE_KEY = process.env.RECAPTCHA_PRIVATE_KEY || 'xxx';
 const baseURL = 'https://httpbin.org';
 //#endregion
 
@@ -33,7 +33,7 @@ app.post('/submit', async (req, res) => {
       null,
       {
         params: {
-          secret: RECAPTCHA_SECRET_KEY,
+          secret: RECAPTCHA_PRIVATE_KEY,
           response: token,
         },
       }
