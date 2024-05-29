@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 
 const app = express();
 app.use(cors());
+app.use(express.json());// Middleware to parse JSON or URL-encoded data
+app.use(express.urlencoded({ extended: true })); // For complex form data
 dotenv.config({ path: './.env' });
 
 //#region keys and configs
@@ -16,8 +18,8 @@ const baseURL = 'https://httpbin.org';
 
 // Endpoint to handle form submissions
 app.post('/submit', async (req, res) => {
-  console.log(req);
-  const token = false;
+  console.log(req.body);
+  const token = req.body['g-recaptcha-response'];
 
   if (!token) {
     return res
