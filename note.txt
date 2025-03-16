@@ -1,0 +1,55 @@
+To create a reCAPTCHA key from Google Cloud Console, follow these steps:
+
+Step 1: Go to reCAPTCHA Admin Console
+Open the reCAPTCHA Admin Console:
+https://www.google.com/recaptcha/admin
+Sign in with your Google account.
+Step 2: Register a New Site
+Click the "+" (Create) button to register a new site.
+Fill out the form:
+Label: Enter a name (e.g., "My Website reCAPTCHA").
+reCAPTCHA Type:
+reCAPTCHA v3 (for invisible bot detection)
+reCAPTCHA v2 (for checkbox challenges)
+reCAPTCHA v2 - Invisible (works automatically)
+reCAPTCHA Enterprise (for advanced security)
+Domains: Enter your website domain(s) (e.g., example.com).
+⚠ Do not include http:// or https://
+Owners: Add additional Google accounts (if needed).
+Accept the reCAPTCHA Terms of Service.
+Click Submit.
+Step 3: Get Your reCAPTCHA Keys
+After registration, Google provides:
+
+Site Key: Public key for front-end integration.
+Secret Key: Private key for back-end verification. (Keep this confidential!)
+Step 4: Configure in Google Cloud Console (Optional)
+If using Google Cloud Services, ensure:
+
+Enable reCAPTCHA API:
+Go to Google Cloud Console
+Navigate to APIs & Services → Library
+Search for reCAPTCHA Enterprise API and Enable it.
+Set up credentials if integrating with other Google services.
+Step 5: Implement reCAPTCHA in Your Website
+For v2 Checkbox:
+html
+Copy
+Edit
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<form action="verify.php" method="POST">
+    <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
+    <button type="submit">Submit</button>
+</form>
+For v3 (invisible, uses JavaScript):
+html
+Copy
+Edit
+<script src="https://www.google.com/recaptcha/api.js?render=YOUR_SITE_KEY"></script>
+<script>
+  grecaptcha.ready(function() {
+      grecaptcha.execute('YOUR_SITE_KEY', {action: 'homepage'}).then(function(token) {
+          console.log(token); // Send to backend for verification
+      });
+  });
+</script>
